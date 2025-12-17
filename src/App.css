@@ -46,15 +46,9 @@ body > div[style*="z-index: 999"],
 body > div[style*="z-index: 9999"],
 body > div[style*="z-index:999"],
 body > div[style*="z-index:9999"] {
-  opacity: 0.15 !important;
-  bottom: -20px !important;
-  transform: translateY(40px) !important;
-  transition: opacity 0.3s ease !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
   pointer-events: none !important;
-  z-index: 1 !important;
-}
-
-#pp-tagger:hover,
-body > div[style*="position: fixed"]:hover {
-  opacity: 0.08 !important;
+  z-index: -9999 !important;
 }

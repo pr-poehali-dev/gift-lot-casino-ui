@@ -41,19 +41,7 @@ const Index = () => {
     setIsSpinning(true);
     setSelectedPrize(null);
 
-    const rand = Math.random() * 100;
-    let winningIndex = 0;
-
-    if (rand <= 80) {
-      winningIndex = 1;
-    } else {
-      const remaining = rand - 80;
-      if (remaining <= 4) winningIndex = 0;
-      else if (remaining <= 7) winningIndex = 2;
-      else if (remaining <= 9.6) winningIndex = 4;
-      else if (remaining <= 11) winningIndex = 6;
-      else winningIndex = 7;
-    }
+    const winningIndex = 1;
 
     const segmentAngle = 360 / prizes.length;
     const baseRotation = Math.floor(rotation / 360) * 360;
@@ -67,9 +55,6 @@ const Index = () => {
       setSelectedPrize(prizes[winningIndex].value);
       if (prizes[winningIndex].value > 0) {
         setBalance(prev => prev + prizes[winningIndex].value);
-        alert(`🎉 Поздравляем! Вы выиграли ${prizes[winningIndex].value}₮`);
-      } else {
-        alert('😔 Не повезло! Попробуйте ещё раз');
       }
     }, 4000);
   };
