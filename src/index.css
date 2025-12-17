@@ -68,3 +68,16 @@
     scrollbar-width: none;
   }
 }
+
+body > div[style*="position: fixed"],
+body > div[style*="position:fixed"],
+div[style*="bottom"][style*="right"][style*="fixed"],
+div[style*="z-index: 99"],
+div[style*="z-index:99"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
