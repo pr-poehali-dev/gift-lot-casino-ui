@@ -7,6 +7,8 @@ const Index = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [isWalletOpen, setIsWalletOpen] = useState(false);
   const [walletTab, setWalletTab] = useState<'deposit' | 'withdraw' | 'history'>('deposit');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
+  const [depositAmount, setDepositAmount] = useState('');
 
   const categories = [
     { id: 'all', label: 'Все', icon: 'Grid3x3' },
@@ -21,11 +23,33 @@ const Index = () => {
     { id: 'gift', label: 'Подарочный', icon: 'Gift' }
   ];
 
-  const transactionHistory = [
-    { id: 1, type: 'deposit', amount: 1000, date: '15.12.2024 14:30', status: 'success' },
-    { id: 2, type: 'withdraw', amount: 500, date: '14.12.2024 18:20', status: 'success' },
-    { id: 3, type: 'deposit', amount: 2500, date: '13.12.2024 09:15', status: 'pending' },
+  const paymentMethods = [
+    { id: 'cryptobot', name: '@CryptoBot', icon: '💎', limits: 'От 10USDT до 5 000USDT', badge: '⚡' },
+    { id: 'usdt-bsc', name: 'USDT (BSC/BNB)', icon: '₮', limits: 'От 10USDT до 5 000USDT', badge: '🔶' },
+    { id: 'usdt-ton', name: 'USDT (TON)', icon: '₮', limits: 'От 10USDT до 5 000USDT', badge: '💠' },
+    { id: 'usdt-trc20', name: 'USDT (TRC20/Tron)', icon: '₮', limits: 'От 10USDT до 5 000USDT', badge: '🔺' },
+    { id: 'tonwallet', name: 'TonWallet', icon: '💼', limits: 'От 10USDT до 5 000USDT', badge: '💎' },
   ];
+
+  const transactionHistory: any[] = [];
+
+  const quickAmounts = [
+    { amount: '10USDT', bonus: '+12USDT' },
+    { amount: '50USDT', bonus: '+150USDT' },
+    { amount: '100USDT', bonus: '+300USDT' },
+    { amount: '500USDT', bonus: '+1 800USDT' },
+    { amount: '1 000USDT', bonus: '+3 600USDT' },
+    { amount: '5 000USDT', bonus: '+18 000USDT' },
+  ];
+
+  const handlePaymentMethodSelect = (methodId: string) => {
+    setSelectedPaymentMethod(methodId);
+  };
+
+  const handleBackToMethods = () => {
+    setSelectedPaymentMethod(null);
+    setDepositAmount('');
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-20">
@@ -196,169 +220,224 @@ const Index = () => {
       </nav>
 
       <Sheet open={isWalletOpen} onOpenChange={setIsWalletOpen}>
-        <SheetContent side="bottom" className="h-[85vh] bg-background border-t border-border rounded-t-3xl">
-          <SheetHeader className="mb-4">
-            <SheetTitle className="text-xl font-bold text-white">Кошелёк</SheetTitle>
-          </SheetHeader>
+        <SheetContent side="bottom" className="h-[90vh] bg-background border-t border-border rounded-t-3xl p-0">
+          {selectedPaymentMethod ? (
+            <div className="h-full flex flex-col">
+              <div className="flex items-center gap-3 px-4 py-4 border-b border-border/50">
+                <button onClick={handleBackToMethods} className="w-10 h-10 rounded-xl bg-card flex items-center justify-center">
+                  <Icon name="ChevronLeft" className="text-white" size={20} />
+                </button>
+                <h2 className="text-lg font-semibold text-white">
+                  Пополнение через {paymentMethods.find(m => m.id === selectedPaymentMethod)?.name}
+                </h2>
+              </div>
 
-          <div className="flex items-center gap-2 mb-6 bg-card/50 p-1 rounded-2xl">
-            <button
-              onClick={() => setWalletTab('deposit')}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                walletTab === 'deposit' ? 'bg-primary text-white' : 'text-muted-foreground'
-              }`}
-            >
-              <Icon name="ArrowDownToLine" className="inline mr-1.5" size={16} />
-              Пополнить
-            </button>
-            <button
-              onClick={() => setWalletTab('withdraw')}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                walletTab === 'withdraw' ? 'bg-primary text-white' : 'text-muted-foreground'
-              }`}
-            >
-              <Icon name="ArrowUpFromLine" className="inline mr-1.5" size={16} />
-              Вывести
-            </button>
-            <button
-              onClick={() => setWalletTab('history')}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                walletTab === 'history' ? 'bg-primary text-white' : 'text-muted-foreground'
-              }`}
-            >
-              <Icon name="Clock" className="inline mr-1.5" size={16} />
-              История
-            </button>
-          </div>
-
-          <div className="overflow-y-auto h-[calc(85vh-140px)] pb-6">
-            {walletTab === 'deposit' && (
-              <div className="space-y-4">
-                <div className="bg-card rounded-2xl p-4 border border-border/50">
-                  <label className="text-sm text-muted-foreground mb-2 block">Сумма пополнения</label>
-                  <div className="flex items-center gap-2 bg-background rounded-xl p-3 border border-border">
-                    <Icon name="Coins" className="text-primary" size={20} />
-                    <input 
-                      type="number" 
-                      placeholder="0" 
-                      className="flex-1 bg-transparent text-white text-lg font-semibold outline-none"
-                    />
-                    <span className="text-muted-foreground">₽</span>
+              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+                <div className="bg-card rounded-2xl p-4 border border-border/50 flex items-center gap-3">
+                  <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center text-3xl">
+                    {paymentMethods.find(m => m.id === selectedPaymentMethod)?.icon}
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">{paymentMethods.find(m => m.id === selectedPaymentMethod)?.name}</p>
+                    <p className="text-xs text-muted-foreground">{paymentMethods.find(m => m.id === selectedPaymentMethod)?.limits}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
-                  {[100, 500, 1000, 2500, 5000, 10000].map((amount) => (
-                    <button key={amount} className="bg-card hover:bg-card/80 rounded-xl py-3 text-white font-medium border border-border/50">
-                      {amount} ₽
+                <div className="bg-card rounded-2xl p-4 border border-border/50">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-sm text-muted-foreground">Лидер среди криптокошельков в русскоязычном пространстве</span>
+                    <button className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Icon name="HelpCircle" className="text-primary" size={16} />
                     </button>
-                  ))}
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">Способ оплаты</p>
-                  <button className="w-full bg-card hover:bg-card/80 rounded-xl p-4 flex items-center justify-between border border-border/50">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-white">Заплатите</p>
+                    <p className="text-xs text-muted-foreground">Мин. сумма: 10USDT</p>
+                  </div>
+                  
+                  <div className="bg-card rounded-2xl p-4 border-2 border-red-500/50 mb-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                        <Icon name="CreditCard" className="text-primary" size={20} />
-                      </div>
-                      <span className="text-white font-medium">Банковская карта</span>
+                      <span className="text-2xl">₮</span>
+                      <input 
+                        type="text" 
+                        value={depositAmount}
+                        onChange={(e) => setDepositAmount(e.target.value)}
+                        placeholder="0.00" 
+                        className="flex-1 bg-transparent text-white text-xl font-semibold outline-none"
+                      />
+                      <span className="text-muted-foreground">USDT</span>
                     </div>
-                    <Icon name="ChevronRight" className="text-muted-foreground" size={18} />
-                  </button>
-                </div>
+                  </div>
+                  {!depositAmount && <p className="text-xs text-red-500 mb-4">Введите ₽</p>}
 
-                <Button className="w-full h-12 rounded-2xl bg-primary hover:bg-primary/90 text-white font-semibold text-base">
-                  Пополнить счёт
+                  <div className="grid grid-cols-3 gap-2">
+                    {quickAmounts.map((item, idx) => (
+                      <button 
+                        key={idx}
+                        onClick={() => setDepositAmount(item.amount.replace('USDT', ''))}
+                        className="bg-card hover:bg-card/80 rounded-xl py-3 border border-border/50 transition-colors"
+                      >
+                        <p className="text-white font-semibold text-sm">{item.amount}</p>
+                        <p className="text-green-500 text-xs">{item.bonus}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="px-4 py-4 border-t border-border/50">
+                <Button className="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-semibold text-base">
+                  Пополнить баланс<br/>
+                  <span className="text-sm opacity-80">Баланс пополнен на 0₽</span>
                 </Button>
               </div>
-            )}
+            </div>
+          ) : (
+            <>
+              <SheetHeader className="px-4 py-4 border-b border-border/50">
+                <SheetTitle className="text-xl font-bold text-white">Кошелёк</SheetTitle>
+              </SheetHeader>
 
-            {walletTab === 'withdraw' && (
-              <div className="space-y-4">
-                <div className="bg-card rounded-2xl p-4 border border-border/50">
-                  <label className="text-sm text-muted-foreground mb-2 block">Сумма вывода</label>
-                  <div className="flex items-center gap-2 bg-background rounded-xl p-3 border border-border">
-                    <Icon name="Banknote" className="text-primary" size={20} />
-                    <input 
-                      type="number" 
-                      placeholder="0" 
-                      className="flex-1 bg-transparent text-white text-lg font-semibold outline-none"
-                    />
-                    <span className="text-muted-foreground">₽</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">Доступно: 0 ₽</p>
-                </div>
-
-                <div className="bg-card rounded-2xl p-4 border border-border/50">
-                  <label className="text-sm text-muted-foreground mb-2 block">Номер карты</label>
-                  <div className="flex items-center gap-2 bg-background rounded-xl p-3 border border-border">
-                    <Icon name="CreditCard" className="text-primary" size={20} />
-                    <input 
-                      type="text" 
-                      placeholder="0000 0000 0000 0000" 
-                      className="flex-1 bg-transparent text-white text-base outline-none"
-                    />
-                  </div>
-                </div>
-
-                <Button className="w-full h-12 rounded-2xl bg-primary hover:bg-primary/90 text-white font-semibold text-base">
-                  Вывести средства
-                </Button>
+              <div className="flex items-center gap-2 mb-4 bg-card/50 p-1 rounded-2xl mx-4 mt-4">
+                <button
+                  onClick={() => setWalletTab('deposit')}
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    walletTab === 'deposit' ? 'bg-primary text-white' : 'text-muted-foreground'
+                  }`}
+                >
+                  Пополнить
+                </button>
+                <button
+                  onClick={() => setWalletTab('withdraw')}
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    walletTab === 'withdraw' ? 'bg-primary text-white' : 'text-muted-foreground'
+                  }`}
+                >
+                  Вывести
+                </button>
+                <button
+                  onClick={() => setWalletTab('history')}
+                  className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    walletTab === 'history' ? 'bg-primary text-white' : 'text-muted-foreground'
+                  }`}
+                >
+                  История
+                </button>
               </div>
-            )}
 
-            {walletTab === 'history' && (
-              <div className="space-y-3">
-                {transactionHistory.map((transaction) => (
-                  <div key={transaction.id} className="bg-card rounded-2xl p-4 border border-border/50">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                          transaction.type === 'deposit' ? 'bg-green-500/20' : 'bg-orange-500/20'
-                        }`}>
-                          <Icon 
-                            name={transaction.type === 'deposit' ? 'ArrowDownToLine' : 'ArrowUpFromLine'} 
-                            className={transaction.type === 'deposit' ? 'text-green-500' : 'text-orange-500'} 
-                            size={20} 
-                          />
-                        </div>
-                        <div>
-                          <p className="text-white font-medium">
-                            {transaction.type === 'deposit' ? 'Пополнение' : 'Вывод'}
-                          </p>
-                          <p className="text-xs text-muted-foreground">{transaction.date}</p>
-                        </div>
+              <div className="overflow-y-auto h-[calc(90vh-160px)] px-4 pb-6">
+                {walletTab === 'deposit' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center">
+                        <span className="text-primary text-xs">ℹ️</span>
                       </div>
-                      <div className="text-right">
-                        <p className={`text-lg font-semibold ${
-                          transaction.type === 'deposit' ? 'text-green-500' : 'text-orange-500'
-                        }`}>
-                          {transaction.type === 'deposit' ? '+' : '-'}{transaction.amount} ₽
-                        </p>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${
-                          transaction.status === 'success' 
-                            ? 'bg-green-500/20 text-green-500' 
-                            : 'bg-yellow-500/20 text-yellow-500'
-                        }`}>
-                          {transaction.status === 'success' ? 'Выполнено' : 'В обработке'}
-                        </span>
-                      </div>
+                      <p className="text-sm font-semibold text-white">Криптовалютный платеж</p>
                     </div>
+
+                    {paymentMethods.map((method) => (
+                      <button
+                        key={method.id}
+                        onClick={() => handlePaymentMethodSelect(method.id)}
+                        className="w-full bg-card hover:bg-card/80 rounded-2xl p-4 border border-border/50 transition-all"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-16 h-16 rounded-2xl bg-secondary/50 flex items-center justify-center text-3xl relative">
+                            {method.icon}
+                            <span className="absolute -top-1 -right-1 text-sm">{method.badge}</span>
+                          </div>
+                          <div className="flex-1 text-left">
+                            <p className="text-white font-semibold">{method.name}</p>
+                            <p className="text-xs text-muted-foreground">{method.limits}</p>
+                          </div>
+                          <Icon name="ChevronRight" className="text-muted-foreground" size={20} />
+                        </div>
+                      </button>
+                    ))}
                   </div>
-                ))}
+                )}
 
-                {transactionHistory.length === 0 && (
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 rounded-2xl bg-card mx-auto mb-4 flex items-center justify-center">
-                      <Icon name="Clock" className="text-muted-foreground" size={32} />
+                {walletTab === 'withdraw' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center">
+                        <span className="text-primary text-xs">ℹ️</span>
+                      </div>
+                      <p className="text-sm font-semibold text-white">Вывод средств</p>
                     </div>
-                    <p className="text-muted-foreground">История транзакций пуста</p>
+
+                    {paymentMethods.map((method) => (
+                      <button
+                        key={method.id}
+                        className="w-full bg-card hover:bg-card/80 rounded-2xl p-4 border border-border/50 transition-all"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-16 h-16 rounded-2xl bg-secondary/50 flex items-center justify-center text-3xl relative">
+                            {method.icon}
+                            <span className="absolute -top-1 -right-1 text-sm">{method.badge}</span>
+                          </div>
+                          <div className="flex-1 text-left">
+                            <p className="text-white font-semibold">{method.name}</p>
+                            <p className="text-xs text-muted-foreground">{method.limits}</p>
+                          </div>
+                          <Icon name="ChevronRight" className="text-muted-foreground" size={20} />
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {walletTab === 'history' && (
+                  <div>
+                    {transactionHistory.length === 0 ? (
+                      <div className="text-center py-20">
+                        <div className="w-20 h-20 rounded-3xl bg-card mx-auto mb-4 flex items-center justify-center">
+                          <Icon name="Clock" className="text-muted-foreground" size={40} />
+                        </div>
+                        <p className="text-muted-foreground text-lg">История транзакций пуста</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {transactionHistory.map((transaction) => (
+                          <div key={transaction.id} className="bg-card rounded-2xl p-4 border border-border/50">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                                  transaction.type === 'deposit' ? 'bg-green-500/20' : 'bg-orange-500/20'
+                                }`}>
+                                  <Icon 
+                                    name={transaction.type === 'deposit' ? 'ArrowDownToLine' : 'ArrowUpFromLine'} 
+                                    className={transaction.type === 'deposit' ? 'text-green-500' : 'text-orange-500'} 
+                                    size={20} 
+                                  />
+                                </div>
+                                <div>
+                                  <p className="text-white font-medium">
+                                    {transaction.type === 'deposit' ? 'Пополнение' : 'Вывод'}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">{transaction.date}</p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <p className={`text-lg font-semibold ${
+                                  transaction.type === 'deposit' ? 'text-green-500' : 'text-orange-500'
+                                }`}>
+                                  {transaction.type === 'deposit' ? '+' : '-'}{transaction.amount} ₽
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </SheetContent>
       </Sheet>
     </div>
