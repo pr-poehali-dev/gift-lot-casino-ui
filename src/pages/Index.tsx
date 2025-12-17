@@ -382,12 +382,7 @@ const Index = () => {
         <SheetContent side="bottom" className="h-[90vh] bg-background border-t border-border rounded-t-2xl p-0">
           <div className="h-full flex flex-col">
             <div className="px-3 py-3 border-b border-border/30">
-              <div className="flex items-center justify-between">
-                <h2 className="text-base font-bold text-white">Профиль</h2>
-                <button onClick={() => setIsProfileOpen(false)} className="w-8 h-8 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card transition-colors">
-                  <Icon name="X" className="text-white" size={18} />
-                </button>
-              </div>
+              <h2 className="text-base font-bold text-white">Профиль</h2>
             </div>
 
             <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
