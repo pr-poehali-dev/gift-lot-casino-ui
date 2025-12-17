@@ -60,27 +60,23 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-20">
-      <header className="sticky top-0 z-50 bg-background border-b border-border/50">
-        <div className="px-4 py-3">
+      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/30">
+        <div className="px-3 py-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center">
-                <Icon name="Gift" className="text-white" size={20} />
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center shadow-lg shadow-primary/20">
+                <Icon name="Gift" className="text-white" size={16} />
               </div>
-              <div>
-                <h1 className="text-lg font-bold text-white">Gift Lot</h1>
-              </div>
+              <h1 className="text-base font-bold text-white">Gift Lot</h1>
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="flex items-center gap-2 bg-[#1a1f2e] px-3 py-2 rounded-xl border border-[#2a3142] hover:bg-[#1f2535] transition-colors">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
-                  <span className="text-white text-lg font-bold">₮</span>
+              <button className="flex items-center gap-1.5 bg-card/60 px-2.5 py-1.5 rounded-lg border border-border/30 hover:bg-card/80 transition-all">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg">
+                  <span className="text-white text-sm font-bold">₮</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-white font-bold text-lg">{balance}</span>
-                  <Icon name="ChevronDown" className="text-gray-400" size={16} />
-                </div>
+                <span className="text-white font-bold text-sm">{balance}</span>
+                <Icon name="ChevronDown" className="text-gray-500" size={14} />
               </button>
               <Button 
                 size="sm" 
@@ -89,9 +85,9 @@ const Index = () => {
                   setWalletTab('deposit');
                   setSelectedPaymentMethod(null);
                 }}
-                className="rounded-xl h-10 px-5 bg-[#0ea5e9] hover:bg-[#0284c7] text-white text-sm font-semibold flex items-center gap-2"
+                className="rounded-lg h-8 px-3 bg-[#0ea5e9] hover:bg-[#0284c7] text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-primary/25"
               >
-                <Icon name="Wallet" size={18} />
+                <Icon name="Wallet" size={14} />
                 Пополнить
               </Button>
             </div>
@@ -99,72 +95,72 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="px-4 py-4 space-y-4">
-        <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide">
+      <main className="px-3 py-3 space-y-3">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
           {quickActions.map((item) => (
             <button
               key={item.id}
-              className="flex-shrink-0 flex flex-col items-center gap-1.5 min-w-[70px]"
+              className="flex-shrink-0 flex flex-col items-center gap-1 min-w-[60px]"
             >
-              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center hover:bg-primary/30 transition-colors">
-                <Icon name={item.icon} className="text-primary" size={22} />
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center hover:scale-105 transition-transform shadow-lg">
+                <Icon name={item.icon} className="text-primary" size={18} />
               </div>
-              <span className="text-xs font-medium text-foreground">{item.label}</span>
+              <span className="text-[10px] font-medium text-foreground/80">{item.label}</span>
             </button>
           ))}
         </div>
 
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
-              className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all shadow-sm ${
                 activeCategory === category.id
-                  ? 'bg-primary text-white'
-                  : 'bg-secondary/50 text-muted-foreground hover:bg-secondary'
+                  ? 'bg-gradient-to-r from-primary to-primary/90 text-white shadow-primary/25'
+                  : 'bg-card/60 text-muted-foreground hover:bg-card border border-border/30'
               }`}
             >
-              <Icon name={category.icon} size={16} />
+              <Icon name={category.icon} size={14} />
               {category.label}
             </button>
           ))}
         </div>
 
-        <div className="bg-card/30 rounded-2xl p-3 border border-border/50">
-          <button className="w-full flex items-center justify-between py-2 hover:bg-card/50 rounded-xl px-3 transition-colors">
+        <div className="bg-card/40 rounded-xl p-2 border border-border/30 shadow-sm">
+          <button className="w-full flex items-center justify-between py-1.5 hover:bg-card/60 rounded-lg px-2.5 transition-colors">
             <div className="flex items-center gap-2">
-              <Icon name="Grid2x2" className="text-muted-foreground" size={20} />
-              <span className="text-sm font-medium text-foreground">Провайдеры</span>
+              <Icon name="Grid2x2" className="text-muted-foreground" size={16} />
+              <span className="text-xs font-medium text-foreground">Провайдеры</span>
             </div>
-            <Icon name="ChevronDown" className="text-muted-foreground" size={18} />
+            <Icon name="ChevronDown" className="text-muted-foreground" size={16} />
           </button>
         </div>
 
         <div>
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Icon name="Cherry" className="text-primary" size={20} />
-              <h2 className="text-base font-semibold text-white">Слоты</h2>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1.5">
+              <Icon name="Cherry" className="text-primary" size={16} />
+              <h2 className="text-sm font-semibold text-white">Слоты</h2>
             </div>
-            <div className="flex items-center gap-3">
-              <button className="text-xs text-muted-foreground hover:text-primary">Все</button>
+            <div className="flex items-center gap-2">
+              <button className="text-[10px] text-muted-foreground hover:text-primary font-medium">Все</button>
               <div className="flex items-center gap-1">
-                <button className="w-7 h-7 rounded-lg bg-secondary/50 flex items-center justify-center hover:bg-secondary">
-                  <Icon name="ChevronLeft" className="text-muted-foreground" size={16} />
+                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
+                  <Icon name="ChevronLeft" className="text-muted-foreground" size={14} />
                 </button>
-                <button className="w-7 h-7 rounded-lg bg-secondary/50 flex items-center justify-center hover:bg-secondary">
-                  <Icon name="ChevronRight" className="text-muted-foreground" size={16} />
+                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
+                  <Icon name="ChevronRight" className="text-muted-foreground" size={14} />
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-1.5">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-purple-900/50 to-blue-900/50 border border-border/30 overflow-hidden hover:scale-105 transition-transform">
+              <div key={i} className="aspect-[3/4] rounded-xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-border/20 overflow-hidden hover:scale-105 hover:shadow-xl transition-all shadow-lg">
                 <div className="w-full h-full flex items-center justify-center">
-                  <Icon name="Sparkles" className="text-primary/50" size={32} />
+                  <Icon name="Sparkles" className="text-primary/40" size={24} />
                 </div>
               </div>
             ))}
@@ -172,29 +168,29 @@ const Index = () => {
         </div>
 
         <div>
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Icon name="Zap" className="text-primary" size={20} />
-              <h2 className="text-base font-semibold text-white">Быстрые игры</h2>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1.5">
+              <Icon name="Zap" className="text-primary" size={16} />
+              <h2 className="text-sm font-semibold text-white">Быстрые игры</h2>
             </div>
-            <div className="flex items-center gap-3">
-              <button className="text-xs text-muted-foreground hover:text-primary">Все</button>
+            <div className="flex items-center gap-2">
+              <button className="text-[10px] text-muted-foreground hover:text-primary font-medium">Все</button>
               <div className="flex items-center gap-1">
-                <button className="w-7 h-7 rounded-lg bg-secondary/50 flex items-center justify-center hover:bg-secondary">
-                  <Icon name="ChevronLeft" className="text-muted-foreground" size={16} />
+                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
+                  <Icon name="ChevronLeft" className="text-muted-foreground" size={14} />
                 </button>
-                <button className="w-7 h-7 rounded-lg bg-secondary/50 flex items-center justify-center hover:bg-secondary">
-                  <Icon name="ChevronRight" className="text-muted-foreground" size={16} />
+                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
+                  <Icon name="ChevronRight" className="text-muted-foreground" size={14} />
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-1.5">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-orange-900/50 to-red-900/50 border border-border/30 overflow-hidden hover:scale-105 transition-transform">
+              <div key={i} className="aspect-[3/4] rounded-xl bg-gradient-to-br from-orange-900/40 to-red-900/40 border border-border/20 overflow-hidden hover:scale-105 hover:shadow-xl transition-all shadow-lg">
                 <div className="w-full h-full flex items-center justify-center">
-                  <Icon name="Gamepad2" className="text-primary/50" size={32} />
+                  <Icon name="Gamepad2" className="text-primary/40" size={24} />
                 </div>
               </div>
             ))}
@@ -202,32 +198,32 @@ const Index = () => {
         </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border/50 z-40">
-        <div className="flex items-center justify-around py-2 px-2">
-          <button className="flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl">
-            <Icon name="Home" className="text-primary" size={24} />
-            <span className="text-[10px] font-medium text-primary">Игры</span>
+      <nav className="fixed bottom-0 left-0 right-0 bg-background/98 backdrop-blur-xl border-t border-border/30 z-40 shadow-2xl">
+        <div className="flex items-center justify-around py-1.5 px-2">
+          <button className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg">
+            <Icon name="Home" className="text-primary" size={20} />
+            <span className="text-[9px] font-medium text-primary">Игры</span>
           </button>
 
-          <button className="flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl hover:bg-card/50">
-            <Icon name="Star" className="text-muted-foreground" size={24} />
-            <span className="text-[10px] font-medium text-muted-foreground">Бонусы</span>
+          <button className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg hover:bg-card/30 transition-colors">
+            <Icon name="Star" className="text-muted-foreground" size={20} />
+            <span className="text-[9px] font-medium text-muted-foreground">Бонусы</span>
           </button>
 
           <button 
             onClick={() => setIsWalletOpen(true)}
-            className="flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl hover:bg-card/50 relative"
+            className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg hover:bg-card/30 transition-colors relative"
           >
-            <div className="absolute -top-1 right-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-[10px] font-bold text-white">💰</span>
+            <div className="absolute -top-0.5 right-1 w-4 h-4 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-primary/30">
+              <span className="text-[8px] font-bold text-white">💰</span>
             </div>
-            <Icon name="Wallet" className="text-muted-foreground" size={24} />
-            <span className="text-[10px] font-medium text-muted-foreground">Пополнить</span>
+            <Icon name="Wallet" className="text-muted-foreground" size={20} />
+            <span className="text-[9px] font-medium text-muted-foreground">Кошелёк</span>
           </button>
 
-          <button className="flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl hover:bg-card/50">
-            <Icon name="User" className="text-muted-foreground" size={24} />
-            <span className="text-[10px] font-medium text-muted-foreground">Профиль</span>
+          <button className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg hover:bg-card/30 transition-colors">
+            <Icon name="User" className="text-muted-foreground" size={20} />
+            <span className="text-[9px] font-medium text-muted-foreground">Профиль</span>
           </button>
         </div>
       </nav>
