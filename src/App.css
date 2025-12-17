@@ -41,6 +41,7 @@
 
 #pp-tagger,
 #pp-tagger *,
+#pp-tagger > *,
 body > div[style*="position: fixed"][style*="bottom"],
 body > div[style*="position: fixed"][style*="right"],
 body > div[style*="z-index: 999"],
@@ -50,7 +51,9 @@ body > div[style*="z-index:9999"],
 body > div[style*="poehali"],
 body > div[style*="Poehali"],
 div[class*="pp-"],
-div[id*="pp-"] {
+div[id*="pp-"],
+a[href*="poehali"],
+a[href*="Poehali"] {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
@@ -58,7 +61,13 @@ div[id*="pp-"] {
   z-index: -9999 !important;
   width: 0 !important;
   height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
   position: absolute !important;
   left: -99999px !important;
   top: -99999px !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
 }

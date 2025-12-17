@@ -149,7 +149,7 @@ const Index = () => {
         </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-background/98 backdrop-blur-xl border-t border-border/30 z-40 shadow-2xl">
+      <nav className="fixed bottom-0 left-0 right-0 bg-background/98 backdrop-blur-xl border-t border-border/30 z-[9999] shadow-2xl">
         <div className="flex items-center justify-around py-1.5 px-2">
           <button className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg">
             <Icon name="Home" className="text-primary" size={20} />
