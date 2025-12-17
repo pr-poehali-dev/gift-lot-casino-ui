@@ -10,6 +10,8 @@ interface BonusSheetProps {
   rotation: number;
   selectedPrize: number | null;
   onSpinWheel: () => void;
+  canSpin: boolean;
+  timeUntilNextSpin: string;
 }
 
 const BonusSheet = ({
@@ -20,6 +22,8 @@ const BonusSheet = ({
   rotation,
   selectedPrize,
   onSpinWheel,
+  canSpin,
+  timeUntilNextSpin,
 }: BonusSheetProps) => {
   const prizes = [
     { value: 5, probability: 4, color: '#ef4444', label: '5₮' },
@@ -110,14 +114,19 @@ const BonusSheet = ({
                 </div>
               </div>
 
-              <div className="mt-4 flex justify-center">
+              <div className="mt-4 flex flex-col items-center gap-2">
                 <Button
                   onClick={onSpinWheel}
-                  disabled={isSpinning}
+                  disabled={isSpinning || !canSpin}
                   className="h-14 px-8 rounded-xl bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-700 text-white font-bold text-base shadow-xl shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSpinning ? 'Крутится...' : 'Крутить'}
+                  {isSpinning ? 'Крутится...' : canSpin ? 'Крутить' : 'Недоступно'}
                 </Button>
+                {!canSpin && timeUntilNextSpin && (
+                  <p className="text-xs text-muted-foreground">
+                    Следующее вращение через: {timeUntilNextSpin}
+                  </p>
+                )}
               </div>
 
               {selectedPrize !== null && (

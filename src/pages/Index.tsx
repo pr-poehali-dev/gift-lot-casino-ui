@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import WalletSheet from '@/components/WalletSheet';
@@ -19,6 +19,8 @@ const Index = () => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [selectedPrize, setSelectedPrize] = useState<number | null>(null);
+  const [canSpin, setCanSpin] = useState(true);
+  const [timeUntilNextSpin, setTimeUntilNextSpin] = useState<string>('');
 
   const categories = [
     { id: 'all', label: 'Все', icon: 'Grid3x3' },
@@ -36,8 +38,32 @@ const Index = () => {
     { value: 100, probability: 1, color: '#10b981', label: '100₮' },
   ];
 
+  const checkSpinAvailability = () => {
+    const lastSpinTime = localStorage.getItem('lastSpinTime');
+    if (!lastSpinTime) {
+      setCanSpin(true);
+      setTimeUntilNextSpin('');
+      return;
+    }
+
+    const now = Date.now();
+    const timePassed = now - parseInt(lastSpinTime);
+    const twentyFourHours = 24 * 60 * 60 * 1000;
+
+    if (timePassed >= twentyFourHours) {
+      setCanSpin(true);
+      setTimeUntilNextSpin('');
+    } else {
+      setCanSpin(false);
+      const timeLeft = twentyFourHours - timePassed;
+      const hours = Math.floor(timeLeft / (60 * 60 * 1000));
+      const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+      setTimeUntilNextSpin(`${hours}ч ${minutes}м`);
+    }
+  };
+
   const spinWheel = () => {
-    if (isSpinning) return;
+    if (isSpinning || !canSpin) return;
 
     setIsSpinning(true);
     setSelectedPrize(null);
@@ -58,8 +84,16 @@ const Index = () => {
       if (prizes[winningIndex].value > 0) {
         setBalance(prev => prev + prizes[winningIndex].value);
       }
+      localStorage.setItem('lastSpinTime', Date.now().toString());
+      checkSpinAvailability();
     }, 4000);
   };
+
+  useEffect(() => {
+    checkSpinAvailability();
+    const interval = setInterval(checkSpinAvailability, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-20">
@@ -196,6 +230,8 @@ const Index = () => {
         rotation={rotation}
         selectedPrize={selectedPrize}
         onSpinWheel={spinWheel}
+        canSpin={canSpin}
+        timeUntilNextSpin={timeUntilNextSpin}
       />
 
       <NotificationsSheet
