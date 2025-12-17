@@ -25,14 +25,14 @@ const Index = () => {
   const quickActions: any[] = [];
 
   const prizes = [
-    { value: 5, probability: 20, color: '#ef4444', label: '5₮' },
-    { value: 0, probability: 40, color: '#64748b', label: '0₮' },
-    { value: 10, probability: 15, color: '#f59e0b', label: '10₮' },
-    { value: 0, probability: 40, color: '#64748b', label: '0₮' },
-    { value: 25, probability: 13, color: '#8b5cf6', label: '25₮' },
-    { value: 0, probability: 10, color: '#64748b', label: '0₮' },
-    { value: 50, probability: 7, color: '#06b6d4', label: '50₮' },
-    { value: 100, probability: 5, color: '#10b981', label: '100₮' },
+    { value: 5, probability: 4, color: '#ef4444', label: '5₮' },
+    { value: 0, probability: 80, color: '#64748b', label: '0₮' },
+    { value: 10, probability: 3, color: '#f59e0b', label: '10₮' },
+    { value: 0, probability: 0, color: '#64748b', label: '0₮' },
+    { value: 25, probability: 2.6, color: '#8b5cf6', label: '25₮' },
+    { value: 0, probability: 0, color: '#64748b', label: '0₮' },
+    { value: 50, probability: 1.4, color: '#06b6d4', label: '50₮' },
+    { value: 100, probability: 1, color: '#10b981', label: '100₮' },
   ];
 
   const spinWheel = () => {
@@ -42,19 +42,22 @@ const Index = () => {
     setSelectedPrize(null);
 
     const rand = Math.random() * 100;
-    let cumulative = 0;
     let winningIndex = 0;
 
-    for (let i = 0; i < prizes.length; i++) {
-      cumulative += prizes[i].probability;
-      if (rand <= cumulative) {
-        winningIndex = i;
-        break;
-      }
+    if (rand <= 80) {
+      winningIndex = 1;
+    } else {
+      const remaining = rand - 80;
+      if (remaining <= 4) winningIndex = 0;
+      else if (remaining <= 7) winningIndex = 2;
+      else if (remaining <= 9.6) winningIndex = 4;
+      else if (remaining <= 11) winningIndex = 6;
+      else winningIndex = 7;
     }
 
     const segmentAngle = 360 / prizes.length;
-    const targetRotation = 360 * 5 + (360 - winningIndex * segmentAngle) + (segmentAngle / 2);
+    const baseRotation = Math.floor(rotation / 360) * 360;
+    const targetRotation = baseRotation + 360 * 5 + (360 - winningIndex * segmentAngle) + (segmentAngle / 2);
     
     setRotation(targetRotation);
 
@@ -746,28 +749,28 @@ const Index = () => {
                 </h3>
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-muted-foreground">100₮</span>
-                    <span className="text-green-500 font-medium">5%</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-muted-foreground">50₮</span>
-                    <span className="text-cyan-500 font-medium">7%</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-muted-foreground">25₮</span>
-                    <span className="text-purple-500 font-medium">13%</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-muted-foreground">10₮</span>
-                    <span className="text-orange-500 font-medium">15%</span>
+                    <span className="text-muted-foreground">0₮</span>
+                    <span className="text-gray-500 font-medium">80%</span>
                   </div>
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="text-muted-foreground">5₮</span>
-                    <span className="text-red-500 font-medium">20%</span>
+                    <span className="text-red-500 font-medium">4%</span>
                   </div>
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-muted-foreground">0₮</span>
-                    <span className="text-gray-500 font-medium">40%</span>
+                    <span className="text-muted-foreground">10₮</span>
+                    <span className="text-orange-500 font-medium">3%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-muted-foreground">25₮</span>
+                    <span className="text-purple-500 font-medium">2.6%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-muted-foreground">50₮</span>
+                    <span className="text-cyan-500 font-medium">1.4%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[10px]">
+                    <span className="text-muted-foreground">100₮</span>
+                    <span className="text-green-500 font-medium">1%</span>
                   </div>
                 </div>
               </div>
