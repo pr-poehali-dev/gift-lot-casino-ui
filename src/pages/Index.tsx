@@ -13,9 +13,7 @@ const Index = () => {
 
   const categories = [
     { id: 'all', label: 'Все', icon: 'Grid3x3' },
-    { id: 'slots', label: 'Слоты', icon: 'Cherry' },
-    { id: 'fast', label: 'Быстрые Игры', icon: 'Zap' },
-    { id: 'fire', label: 'Хиты', icon: 'Flame' }
+    { id: 'fast', label: 'Быстрые Игры', icon: 'Zap' }
   ];
 
   const quickActions = [
