@@ -136,66 +136,6 @@ const Index = () => {
             <Icon name="ChevronDown" className="text-muted-foreground" size={16} />
           </button>
         </div>
-
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5">
-              <Icon name="Cherry" className="text-primary" size={16} />
-              <h2 className="text-sm font-semibold text-white">Слоты</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="text-[10px] text-muted-foreground hover:text-primary font-medium">Все</button>
-              <div className="flex items-center gap-1">
-                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
-                  <Icon name="ChevronLeft" className="text-muted-foreground" size={14} />
-                </button>
-                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
-                  <Icon name="ChevronRight" className="text-muted-foreground" size={14} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-1.5">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="aspect-[3/4] rounded-xl bg-gradient-to-br from-purple-900/40 to-blue-900/40 border border-border/20 overflow-hidden hover:scale-105 hover:shadow-xl transition-all shadow-lg">
-                <div className="w-full h-full flex items-center justify-center">
-                  <Icon name="Sparkles" className="text-primary/40" size={24} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5">
-              <Icon name="Zap" className="text-primary" size={16} />
-              <h2 className="text-sm font-semibold text-white">Быстрые игры</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="text-[10px] text-muted-foreground hover:text-primary font-medium">Все</button>
-              <div className="flex items-center gap-1">
-                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
-                  <Icon name="ChevronLeft" className="text-muted-foreground" size={14} />
-                </button>
-                <button className="w-6 h-6 rounded-lg bg-card/60 flex items-center justify-center hover:bg-card border border-border/30 transition-colors">
-                  <Icon name="ChevronRight" className="text-muted-foreground" size={14} />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-1.5">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="aspect-[3/4] rounded-xl bg-gradient-to-br from-orange-900/40 to-red-900/40 border border-border/20 overflow-hidden hover:scale-105 hover:shadow-xl transition-all shadow-lg">
-                <div className="w-full h-full flex items-center justify-center">
-                  <Icon name="Gamepad2" className="text-primary/40" size={24} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </main>
 
       <nav className="fixed bottom-0 left-0 right-0 bg-background/98 backdrop-blur-xl border-t border-border/30 z-40 shadow-2xl">
