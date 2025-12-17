@@ -31,6 +31,12 @@ const Index = () => {
     { id: 'tonwallet', name: 'TonWallet', icon: '💼', limits: 'От 10USDT до 5 000USDT', badge: '💎' },
   ];
 
+  const withdrawMethods = [
+    { id: 'cryptobot', name: '@CryptoBot', icon: '💎', limits: 'От 10USDT до 5 000USDT', badge: '⚡' },
+    { id: 'usdt-bsc', name: 'USDT (BSC/BNB)', icon: '₮', limits: 'От 10USDT до 5 000USDT', badge: '🔶' },
+    { id: 'usdt-ton', name: 'USDT (TON)', icon: '₮', limits: 'От 10USDT до 5 000USDT', badge: '💠' },
+  ];
+
   const transactionHistory: any[] = [];
 
   const quickAmounts = [
@@ -369,9 +375,10 @@ const Index = () => {
                       <p className="text-sm font-semibold text-white">Вывод средств</p>
                     </div>
 
-                    {paymentMethods.map((method) => (
+                    {withdrawMethods.map((method) => (
                       <button
                         key={method.id}
+                        onClick={() => handlePaymentMethodSelect(method.id)}
                         className="w-full bg-card hover:bg-card/80 rounded-2xl p-4 border border-border/50 transition-all"
                       >
                         <div className="flex items-center gap-3">
