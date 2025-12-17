@@ -138,39 +138,6 @@ const BonusSheet = ({
                 </div>
               )}
             </div>
-
-            <div className="bg-card/40 rounded-xl p-3 border border-border/30">
-              <h3 className="text-white font-semibold text-xs mb-2 flex items-center gap-1.5">
-                <Icon name="Info" className="text-primary" size={14} />
-                Шансы выигрыша
-              </h3>
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-muted-foreground">0₮</span>
-                  <span className="text-gray-500 font-medium">80%</span>
-                </div>
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-muted-foreground">5₮</span>
-                  <span className="text-red-500 font-medium">4%</span>
-                </div>
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-muted-foreground">10₮</span>
-                  <span className="text-orange-500 font-medium">3%</span>
-                </div>
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-muted-foreground">25₮</span>
-                  <span className="text-purple-500 font-medium">2.6%</span>
-                </div>
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-muted-foreground">50₮</span>
-                  <span className="text-cyan-500 font-medium">1.4%</span>
-                </div>
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-muted-foreground">100₮</span>
-                  <span className="text-green-500 font-medium">1%</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </SheetContent>
