@@ -39,6 +39,10 @@
   color: #888;
 }
 
+body > div:last-of-type,
+body > div:nth-last-of-type(1),
+body > div:nth-last-of-type(2),
+body > a:last-of-type,
 #pp-tagger,
 #pp-tagger *,
 #pp-tagger > *,
@@ -53,12 +57,14 @@ body > div[style*="Poehali"],
 div[class*="pp-"],
 div[id*="pp-"],
 a[href*="poehali"],
-a[href*="Poehali"] {
+a[href*="Poehali"],
+body::after,
+body::before {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  z-index: -9999 !important;
+  z-index: -99999 !important;
   width: 0 !important;
   height: 0 !important;
   max-width: 0 !important;
@@ -70,4 +76,9 @@ a[href*="Poehali"] {
   clip: rect(0, 0, 0, 0) !important;
   clip-path: inset(50%) !important;
   white-space: nowrap !important;
+  content: none !important;
+}
+
+body > *:not(#root) {
+  display: none !important;
 }
