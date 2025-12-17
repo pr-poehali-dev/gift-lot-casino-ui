@@ -9,6 +9,7 @@ const Index = () => {
   const [walletTab, setWalletTab] = useState<'deposit' | 'withdraw' | 'history'>('deposit');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string | null>(null);
   const [depositAmount, setDepositAmount] = useState('');
+  const [balance, setBalance] = useState(0);
 
   const categories = [
     { id: 'all', label: 'Все', icon: 'Grid3x3' },
@@ -72,19 +73,25 @@ const Index = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-card/50 px-3 py-1.5 rounded-full border border-border/50">
-                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-primary text-sm">₽</span>
+              <button className="flex items-center gap-2 bg-[#1a1f2e] px-3 py-2 rounded-xl border border-[#2a3142] hover:bg-[#1f2535] transition-colors">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                  <span className="text-white text-lg font-bold">₮</span>
                 </div>
-                <span className="text-base font-semibold text-white">0</span>
-                <Icon name="ChevronDown" className="text-muted-foreground" size={14} />
-              </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-white font-bold text-lg">{balance}</span>
+                  <Icon name="ChevronDown" className="text-gray-400" size={16} />
+                </div>
+              </button>
               <Button 
                 size="sm" 
-                onClick={() => setIsWalletOpen(true)}
-                className="rounded-full h-9 px-4 bg-primary hover:bg-primary/90 text-white text-sm font-medium"
+                onClick={() => {
+                  setIsWalletOpen(true);
+                  setWalletTab('deposit');
+                  setSelectedPaymentMethod(null);
+                }}
+                className="rounded-xl h-10 px-5 bg-[#0ea5e9] hover:bg-[#0284c7] text-white text-sm font-semibold flex items-center gap-2"
               >
-                <Icon name="Wallet" className="mr-1.5" size={16} />
+                <Icon name="Wallet" size={18} />
                 Пополнить
               </Button>
             </div>
@@ -295,9 +302,22 @@ const Index = () => {
               </div>
 
               <div className="px-4 py-4 border-t border-border/50">
-                <Button className="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-semibold text-base">
+                <Button 
+                  onClick={() => {
+                    const amount = parseFloat(depositAmount) || 0;
+                    if (amount >= 10) {
+                      setBalance(prev => prev + amount);
+                      setIsWalletOpen(false);
+                      setSelectedPaymentMethod(null);
+                      setDepositAmount('');
+                      setWalletTab('deposit');
+                    }
+                  }}
+                  disabled={!depositAmount || parseFloat(depositAmount) < 10}
+                  className="w-full h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-semibold text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   Пополнить баланс<br/>
-                  <span className="text-sm opacity-80">Баланс пополнен на 0₽</span>
+                  <span className="text-sm opacity-80">Баланс пополнен на {depositAmount || 0}₮</span>
                 </Button>
               </div>
             </div>
