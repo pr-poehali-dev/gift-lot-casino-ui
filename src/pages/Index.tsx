@@ -57,7 +57,8 @@ const Index = () => {
 
     const segmentAngle = 360 / prizes.length;
     const baseRotation = Math.floor(rotation / 360) * 360;
-    const targetRotation = baseRotation + 360 * 5 + (winningIndex * segmentAngle) - (segmentAngle / 2);
+    const randomSpins = Math.floor(Math.random() * 4) + 4;
+    const targetRotation = baseRotation + 360 * randomSpins + (winningIndex * segmentAngle) - (segmentAngle / 2);
     
     setRotation(targetRotation);
 
@@ -66,6 +67,9 @@ const Index = () => {
       setSelectedPrize(prizes[winningIndex].value);
       if (prizes[winningIndex].value > 0) {
         setBalance(prev => prev + prizes[winningIndex].value);
+        alert(`🎉 Поздравляем! Вы выиграли ${prizes[winningIndex].value}₮`);
+      } else {
+        alert('😔 Не повезло! Попробуйте ещё раз');
       }
     }, 4000);
   };
