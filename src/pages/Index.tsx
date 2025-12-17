@@ -16,11 +16,7 @@ const Index = () => {
     { id: 'fast', label: 'Быстрые Игры', icon: 'Zap' }
   ];
 
-  const quickActions = [
-    { id: 'history', label: 'История', icon: 'Clock' },
-    { id: 'important', label: 'Важное', icon: 'Heart' },
-    { id: 'gift', label: 'Подарочный', icon: 'Gift' }
-  ];
+  const quickActions: any[] = [];
 
   const paymentMethods = [
     { id: 'cryptobot', name: '@CryptoBot', icon: '💎', limits: 'От 10USDT до 5 000USDT', badge: '⚡' },
@@ -94,20 +90,6 @@ const Index = () => {
       </header>
 
       <main className="px-3 py-3 space-y-3">
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {quickActions.map((item) => (
-            <button
-              key={item.id}
-              className="flex-shrink-0 flex flex-col items-center gap-1 min-w-[60px]"
-            >
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center hover:scale-105 transition-transform shadow-lg">
-                <Icon name={item.icon} className="text-primary" size={18} />
-              </div>
-              <span className="text-[10px] font-medium text-foreground/80">{item.label}</span>
-            </button>
-          ))}
-        </div>
-
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
           {categories.map((category) => (
             <button
