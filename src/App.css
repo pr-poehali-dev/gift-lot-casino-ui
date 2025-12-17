@@ -38,20 +38,3 @@
 .read-the-docs {
   color: #888;
 }
-
-body > *:not(#root) {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  z-index: -1 !important;
-}
-
-#pp-tagger,
-#pp-tagger *,
-body > div[style*="position: fixed"],
-body > a[style*="position: fixed"] {
-  display: none !important;
-  visibility: hidden !important;
-  z-index: -1 !important;
-}
