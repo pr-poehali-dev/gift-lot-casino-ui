@@ -124,16 +124,6 @@ const Index = () => {
             </button>
           ))}
         </div>
-
-        <div className="bg-card/40 rounded-xl p-2 border border-border/30 shadow-sm">
-          <button className="w-full flex items-center justify-between py-1.5 hover:bg-card/60 rounded-lg px-2.5 transition-colors">
-            <div className="flex items-center gap-2">
-              <Icon name="Grid2x2" className="text-muted-foreground" size={16} />
-              <span className="text-xs font-medium text-foreground">Провайдеры</span>
-            </div>
-            <Icon name="ChevronDown" className="text-muted-foreground" size={16} />
-          </button>
-        </div>
       </main>
 
       <nav className="fixed bottom-0 left-0 right-0 bg-background/98 backdrop-blur-xl border-t border-border/30 z-40 shadow-2xl">
