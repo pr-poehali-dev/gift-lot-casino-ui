@@ -45,8 +45,8 @@ const Index = () => {
 
     const segmentAngle = 360 / prizes.length;
     const baseRotation = Math.floor(rotation / 360) * 360;
-    const randomSpins = Math.floor(Math.random() * 4) + 4;
-    const targetRotation = baseRotation + 360 * randomSpins + (winningIndex * segmentAngle) - (segmentAngle / 2);
+    const randomSpins = Math.floor(Math.random() * 4) + 5;
+    const targetRotation = baseRotation + 360 * randomSpins - (winningIndex * segmentAngle) + 90;
     
     setRotation(targetRotation);
 
